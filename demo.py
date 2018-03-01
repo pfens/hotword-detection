@@ -3,6 +3,12 @@ import sys
 import signal
 import os
 
+import serial
+
+ser = serial.Serial('/dev/ttyACM?',9600) #treba staviti vrednost
+
+
+
 interrupted = False
 
 
@@ -23,7 +29,7 @@ if len(sys.argv) == 1:
 model = sys.argv[1]
 
 def detected_callback():
-    os.system("cmus-remote -u")
+    ser.write('blink,')
 
 # capture SIGINT signal, e.g., Ctrl+C
 signal.signal(signal.SIGINT, signal_handler)
