@@ -3,9 +3,12 @@ import sys
 import signal
 import os
 
-import serial
+import RPi.GPIO as GPIO
+import time
 
-ser = serial.Serial('/dev/ttyACM?',9600) #treba staviti vrednost
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+GPIO.setup(18,GPIO.OUT)
 
 
 
@@ -29,7 +32,12 @@ if len(sys.argv) == 1:
 model = sys.argv[1]
 
 def detected_callback():
-    ser.write('blink,')
+    #ser.write('blink')
+    print "LED on"
+    GPIO.output(18,GPIO.HIGH)
+    time.sleep(1)
+    print "LED off"
+    GPIO.output(18,GPIO.LOW)
 
 # capture SIGINT signal, e.g., Ctrl+C
 signal.signal(signal.SIGINT, signal_handler)
